@@ -7,10 +7,9 @@ export default class ControlPanel extends React.Component {
     super(props)
   }
   render() {
-    const style = {width: "40%", height: "100%", background: "#D3D3D3", display: "inline-block"}
+    // const style = {width: "40%", height: "100%", background: "#D3D3D3", display: "inline-block"}
     return (
-      <div style={style}>
-        <h1>Control Panel Here</h1>
+      <div>
         <SnitchForm handleFormChange={this.props.handleFormChange} formValues={this.props.formValues} />
         <br></br>
         <br></br>

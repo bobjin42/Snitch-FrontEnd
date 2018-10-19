@@ -16,7 +16,7 @@ export class MapContainer extends React.Component {
 
   }
   render() {
-    const style = {width: "60%",height: "100%", display: "inline-block"}
+    // const style = {width: "60%",height: "100%", display: "inline-block"}
     // here, we'll cycle through the App's state of locations and map an array of
     // Marker components - placing the result inside of Map. The mapping should
     // place a key, name, and onClick method which will set state
@@ -27,7 +27,6 @@ export class MapContainer extends React.Component {
         <Map
           google={this.props.google}
           zoom={14}
-          style={style}
           onClick={this.handleMapClick}
           initialCenter={{lat: 40.704805199999996, lng: -74.0133346}}
         >
