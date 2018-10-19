@@ -16,6 +16,10 @@ export class MapContainer extends React.Component {
 
   }
   render() {
+    const marker = this.props.mapData.map((point) => {
+
+      return <Marker name={point.title} key={point.id} id={point.id} position={{lat: point.latitude ,lng: point.longitude}} onClick={this.handleMarkerClick} />
+        })
 
     return (
 
@@ -27,7 +31,7 @@ export class MapContainer extends React.Component {
           initialCenter={{lat: 40.704805199999996, lng: -74.0133346}}
         >
 
-          <Marker name={'location_1'} onClick={this.handleMarkerClick} />
+          {marker}
           {this.props.tempMarker.set ? <Marker name={"test"} position={this.props.tempMarker.location} onClick={this.handleMarkerClick} /> : null }
         </Map>
 
@@ -40,5 +44,5 @@ export class MapContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo")
+  apiKey: ("")
 })(MapContainer)

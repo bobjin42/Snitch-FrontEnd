@@ -11,6 +11,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      mapData:[],
       selectedLocation: '',
       tempMarker: {
         location: {},
@@ -24,6 +25,17 @@ class App extends Component {
 
     }
   }
+
+  componentDidMount=()=>{
+    fetch('http://localhost:3001/api/v1/locations')
+    .then(response => response.json())
+    .then((mapData)=>{
+      this.setState({
+        mapData
+      })
+    })
+  }
+
   pullMarkerLocation = (event) => {
     this.setState({
       selectedLocation: event.name
@@ -37,10 +49,54 @@ class App extends Component {
       }
     })
   }
+
   handleFormChange = (event) => {
-    console.log(event.target)
+    this.setState({
+      formValues:{
+        ...this.state.formValues,
+        [event.target.name]: event.target.value
+      }
+    })
   }
 
+  handleInputSubmit = (event) => {
+    event.preventDefault();
+    fetch('http://localhost:3001/api/v1/locations', {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        location: {
+          user_id: 1,
+          latitude: this.state.tempMarker.location.lat,
+          longitude: this.state.tempMarker.location.lng,
+          title: this.state.formValues.title,
+          description: this.state.formValues.description
+        }
+      })
+    })
+    .then(r => r.json())
+    .then(response => {
+      this.setState({
+        mapData: [
+          ...this.state.mapData,
+          response
+        ],
+        selectedLocation: '',
+        tempMarker: {
+          location: {},
+          set: false
+        },
+        formValue: {
+          title: '',
+          description: '',
+          location: {}
+        }
+      },() => console.log(this.state))
+    })
+  }
 
 
   render() {
@@ -50,17 +106,16 @@ class App extends Component {
         <Grid columns={2} padded>
           <Grid.Column width={10}>
             <GoogleApiWrapper
+              mapData={this.state.mapData}
               setMarkerLocation={this.setMarkerLocation}
               pullMarkerLocation={this.pullMarkerLocation}
               tempMarker={this.state.tempMarker}
-
-
             />
-
             />
           </Grid.Column>
           <Grid.Column width={6}>
             <ControlPanel
+              handleInputSubmit = {this.handleInputSubmit}
               handleFormChange={this.handleFormChange}
               formValues={this.state.formValues}
               tempMarker={this.state.tempMarker.location}
