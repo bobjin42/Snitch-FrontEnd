@@ -38,9 +38,18 @@ class App extends Component {
     })
   }
   handleFormChange = (event) => {
-    console.log(event.target)
+    this.setState({
+      formValues:{
+        ...this.state.formValues,
+        [event.target.name]: event.target.value
+      }
+    })
   }
 
+  handleInputSubmit = (event) => {
+    event.preventDefault();
+    console.log(this.state.formValues);
+  }
 
 
   render() {
@@ -53,14 +62,12 @@ class App extends Component {
               setMarkerLocation={this.setMarkerLocation}
               pullMarkerLocation={this.pullMarkerLocation}
               tempMarker={this.state.tempMarker}
-
-
             />
-
             />
           </Grid.Column>
           <Grid.Column width={6}>
             <ControlPanel
+              handleInputSubmit = {this.handleInputSubmit}
               handleFormChange={this.handleFormChange}
               formValues={this.state.formValues}
               tempMarker={this.state.tempMarker.location}

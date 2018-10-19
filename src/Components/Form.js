@@ -5,7 +5,7 @@ const SnitchForm = (props) => {
   console.log(props)
   return (
 
-      <Form style={{marginLeft: "20px", backgroundColor:"#D9D8D9", textAlign: "center"}}>
+      <Form onSubmit={props.handleInputSubmit} style={{marginLeft: "20px", backgroundColor:"#D9D8D9", textAlign: "center"}}>
         <h1>Snitch Form:</h1>
         <Form.Input
           name="title"
