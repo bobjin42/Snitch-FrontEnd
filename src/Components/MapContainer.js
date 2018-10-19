@@ -1,6 +1,7 @@
 import React from 'react';
-import {Map,Marker,GoogleApiWrapper} from 'google-maps-react';
+import {Map,Marker,GoogleApiWrapper,HeatmapLayer} from 'google-maps-react';
 import {Router, Route} from 'react-router';
+
 
 
 
@@ -19,7 +20,7 @@ export class MapContainer extends React.Component {
     // here, we'll cycle through the App's state of locations and map an array of
     // Marker components - placing the result inside of Map. The mapping should
     // place a key, name, and onClick method which will set state
-    console.log(this.props.tempMarker)
+    console.log(this.props.google)
     return (
 
 
@@ -30,6 +31,7 @@ export class MapContainer extends React.Component {
           onClick={this.handleMapClick}
           initialCenter={{lat: 40.704805199999996, lng: -74.0133346}}
         >
+          
           <Marker name={'location_1'} onClick={this.handleMarkerClick} />
           {this.props.tempMarker.set ? <Marker name={"test"} position={this.props.tempMarker.location} onClick={this.handleMarkerClick} /> : null }
         </Map>
@@ -43,8 +45,5 @@ export class MapContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("[INSERT GOOGLE API KEY HERE]")
+  apiKey: ("AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo")
 })(MapContainer)
-
-
-// {this.state.set ? <Marker position={this.state.temporaryMarker} /> : null }

@@ -1,3 +1,4 @@
+/* global google */
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -5,7 +6,7 @@ import GoogleApiWrapper from './Components/MapContainer'
 import ControlPanel from './Components/ControlPanel'
 import NavBar from './Components/NavBar'
 
-const APIKey = "AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo"
+
 
 class App extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class App extends Component {
           setMarkerLocation={this.setMarkerLocation}
           pullMarkerLocation={this.pullMarkerLocation}
           tempMarker={this.state.tempMarker}
-          
+
         />
 
       </div>
