@@ -1,20 +1,11 @@
-<<<<<<< HEAD
-/* global google */
-import React, { Component } from 'react';
-=======
 import React, { Component, Fragment } from 'react';
->>>>>>> fcf32953b1b38c3c8816441a674124dbd73facc0
 import logo from './logo.svg';
 import './App.css';
 import GoogleApiWrapper from './Components/MapContainer'
 import ControlPanel from './Components/ControlPanel'
 import NavBar from './Components/NavBar'
-<<<<<<< HEAD
-
-
-=======
 import { Grid } from 'semantic-ui-react'
->>>>>>> fcf32953b1b38c3c8816441a674124dbd73facc0
+
 
 class App extends Component {
   constructor(props) {
@@ -27,7 +18,8 @@ class App extends Component {
       },
       formValues: {
         title: '',
-        description: ''
+        description: '',
+        location: {}
       }
 
     }
@@ -56,22 +48,26 @@ class App extends Component {
       <Fragment>
         <NavBar />
         <Grid columns={2} padded>
-        <Grid.Column width={10}>
-          <GoogleApiWrapper
-          setMarkerLocation={this.setMarkerLocation}
-          pullMarkerLocation={this.pullMarkerLocation}
-          tempMarker={this.state.tempMarker}
-<<<<<<< HEAD
+          <Grid.Column width={10}>
+            <GoogleApiWrapper
+              setMarkerLocation={this.setMarkerLocation}
+              pullMarkerLocation={this.pullMarkerLocation}
+              tempMarker={this.state.tempMarker}
 
-        />
-=======
-          />
-        </Grid.Column>
-        <Grid.Column width={6}>
-          <ControlPanel handleFormChange={this.handleFormChange} formValues={this.state.formValues}/>
-        </Grid.Column>
+
+            />
+
+            />
+          </Grid.Column>
+          <Grid.Column width={6}>
+            <ControlPanel
+              handleFormChange={this.handleFormChange}
+              formValues={this.state.formValues}
+              tempMarker={this.state.tempMarker.location}
+            />
+          </Grid.Column>
         </Grid>
->>>>>>> fcf32953b1b38c3c8816441a674124dbd73facc0
+
 
       </Fragment>
 

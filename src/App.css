@@ -49,3 +49,12 @@ h1 {
 #snitch-form {
   width: 60%;
 }
+
+.string-input {
+  width: 75%;
+  padding-left: 15%;
+}
+.text-input {
+  width: 80%;
+  padding-left: 15%
+}
