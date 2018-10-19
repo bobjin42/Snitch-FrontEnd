@@ -11,6 +11,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      mapData:[],
       selectedLocation: '',
       tempMarker: {
         location: {},
@@ -24,6 +25,15 @@ class App extends Component {
 
     }
   }
+
+  componentDidMount=()=>{
+    fetch('http://localhost:3001/api/v1/locations')
+    .then(response => response.json())
+    .then((mapData)=>{
+      console.log(mapData)
+    })
+  }
+
   pullMarkerLocation = (event) => {
     this.setState({
       selectedLocation: event.name
@@ -37,6 +47,7 @@ class App extends Component {
       }
     })
   }
+
   handleFormChange = (event) => {
     this.setState({
       formValues:{
@@ -49,6 +60,22 @@ class App extends Component {
   handleInputSubmit = (event) => {
     event.preventDefault();
     console.log(this.state.formValues);
+    fetch('http://localhost:3001/api/v1/locations', {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        location: {
+          user_id: 1,
+          latitude: this.state.tempMarker.location.lat,
+          longitude: this.state.tempMarker.location.lng,
+          title: this.state.formValues.title,
+          description: this.state.formValues.description
+        }
+      })
+    })
   }
 
 
