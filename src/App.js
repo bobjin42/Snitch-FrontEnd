@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import GoogleApiWrapper from './Components/MapContainer'
 import ControlPanel from './Components/ControlPanel'
 import NavBar from './Components/NavBar'
-
-const APIKey = "AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo"
+import { Grid } from 'semantic-ui-react'
 
 class App extends Component {
   constructor(props) {
@@ -43,19 +42,23 @@ class App extends Component {
 
 
   render() {
-    let style = {clear: 'right'}
     return (
-      <div style={style}>
+      <Fragment>
         <NavBar />
-        <ControlPanel handleFormChange={this.handleFormChange} formValues={this.state.formValues}/>
-        <GoogleApiWrapper
+        <Grid columns={2} padded>
+        <Grid.Column width={10}>
+          <GoogleApiWrapper
           setMarkerLocation={this.setMarkerLocation}
           pullMarkerLocation={this.pullMarkerLocation}
           tempMarker={this.state.tempMarker}
-          
-        />
+          />
+        </Grid.Column>
+        <Grid.Column width={6}>
+          <ControlPanel handleFormChange={this.handleFormChange} formValues={this.state.formValues}/>
+        </Grid.Column>
+        </Grid>
 
-      </div>
+      </Fragment>
 
     );
   }
