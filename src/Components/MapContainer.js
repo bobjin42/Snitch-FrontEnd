@@ -16,7 +16,7 @@ export class MapContainer extends React.Component {
 
   }
   render() {
-  
+
     return (
 
 
@@ -40,5 +40,5 @@ export class MapContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo")
+  apiKey: ("[PLACE API KEY HERE]")
 })(MapContainer)
