@@ -21,7 +21,8 @@ class App extends Component {
         title: '',
         description: '',
         location: {}
-      }
+      },
+      display: false
 
     }
   }
@@ -36,17 +37,24 @@ class App extends Component {
     })
   }
 
-  pullMarkerLocation = (event) => {
+  pullMarkerLocation = (id) => {
     this.setState({
-      selectedLocation: event.name
-    },() => console.log(this.state.selectedLocation))
+      selectedLocation: id,
+      display: true
+    },()=>{
+      this.state.mapData.find((marker)=>{
+        return marker.id === this.state.selectedLocation
+      })
+    })
   }
+
   setMarkerLocation = (obj) => {
     this.setState({
       tempMarker: {
         location: obj,
         set: true
-      }
+      },
+      display: false
     })
   }
 
@@ -89,7 +97,7 @@ class App extends Component {
           location: {},
           set: false
         },
-        formValue: {
+        formValues: {
           title: '',
           description: '',
           location: {}
@@ -119,6 +127,9 @@ class App extends Component {
               handleFormChange={this.handleFormChange}
               formValues={this.state.formValues}
               tempMarker={this.state.tempMarker.location}
+              display={this.state.display}
+              mapData={this.state.mapData}
+              selectedLocation={this.state.selectedLocation}
             />
           </Grid.Column>
         </Grid>
