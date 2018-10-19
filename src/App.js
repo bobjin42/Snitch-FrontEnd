@@ -15,6 +15,10 @@ class App extends Component {
       tempMarker: {
         location: {},
         set: false
+      },
+      formValues: {
+        title: '',
+        description: ''
       }
 
     }
@@ -32,22 +36,26 @@ class App extends Component {
       }
     })
   }
+  handleFormChange = (event) => {
+    console.log(event.target)
+  }
 
 
 
   render() {
+    let style = {clear: 'right'}
     return (
-      <React.Fragment>
+      <div style={style}>
         <NavBar />
-        <ControlPanel />
+        <ControlPanel handleFormChange={this.handleFormChange} formValues={this.state.formValues}/>
         <GoogleApiWrapper
           setMarkerLocation={this.setMarkerLocation}
           pullMarkerLocation={this.pullMarkerLocation}
           tempMarker={this.state.tempMarker}
-
+          
         />
 
-      </React.Fragment>
+      </div>
 
     );
   }
