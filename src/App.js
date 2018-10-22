@@ -84,7 +84,16 @@ class App extends Component {
       })
     })
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => {
+      this.setState({
+        formValues: {
+          title: '',
+          description: '',
+          location: {},
+          comment: ""
+        }
+      })
+    })
   }
 
   userFormSubmit=(username, password, submitType)=>{
@@ -152,7 +161,6 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state.formValues);
     return (
         <Fragment>
           <NavBar />
