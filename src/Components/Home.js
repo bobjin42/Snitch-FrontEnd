@@ -20,6 +20,7 @@ const Home = (props) => {
           <ControlPanel
             handleInputSubmit = {props.handleInputSubmit}
             handleFormChange={props.handleFormChange}
+            handleCommentSubmit={props.handleCommentSubmit}
             formValues={props.formValues}
             tempMarker={props.tempMarker.location}
             display={props.display}

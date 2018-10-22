@@ -5,7 +5,7 @@ import NavBar from './Components/NavBar'
 import Login from './Components/Login'
 import UserDetail from './Components/UserDetail'
 import Home from './Components/Home'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 
 class App extends Component {
@@ -21,7 +21,8 @@ class App extends Component {
       formValues: {
         title: '',
         description: '',
-        location: {}
+        location: {},
+        comment: ''
       },
       display: false,
       currentUser: {}
@@ -68,10 +69,27 @@ class App extends Component {
     })
   }
 
+  handleCommentSubmit = (event) => {
+    event.preventDefault();
+    fetch('http://localhost:3001/api/v1/comments', {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          user_id: this.state.currentUser.id,
+          location_id: this.state.selectedLocation,
+          commentDescription: this.state.formValues.comment
+      })
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+  }
+
   userFormSubmit=(username, password, submitType)=>{
     let endpoint;
     submitType === "signup" ? endpoint = "users" : endpoint = "login"
-
       fetch(`http://localhost:3001/api/v1/${endpoint}`, {
         method: 'POST',
         headers: {
@@ -89,7 +107,7 @@ class App extends Component {
           currentUser: userData
         })
       })
-      .then(window.location.href = "http://localhost:3000/")
+      // .then(window.location.href = "http://localhost:3000/")
   }
 
   handleInputSubmit = (event) => {
@@ -102,7 +120,7 @@ class App extends Component {
       },
       body: JSON.stringify({
         location: {
-          user_id: 1,
+          user_id: this.state.currentUser.id,
           latitude: this.state.tempMarker.location.lat,
           longitude: this.state.tempMarker.location.lng,
           title: this.state.formValues.title,
@@ -125,39 +143,64 @@ class App extends Component {
         formValues: {
           title: '',
           description: '',
-          location: {}
+          location: {},
+          comment: ""
         }
-      },() => console.log(this.state))
+      })
     })
   }
 
 
   render() {
+    console.log(this.state.formValues);
     return (
-      <Fragment>
-        <NavBar />
-          <Switch>
-            <Route exact path="/"
-              render={()=> <Home
-                mapData={this.state.mapData}
-                setMarkerLocation={this.setMarkerLocation}
-                pullMarkerLocation={this.pullMarkerLocation}
-                tempMarker={this.state.tempMarker}
-                handleInputSubmit = {this.handleInputSubmit}
-                handleFormChange={this.handleFormChange}
-                formValues={this.state.formValues}
-                display={this.state.display}
-                selectedLocation={this.state.selectedLocation}/>
-              }/>
-            <Route path="/login"
-              render={()=> <Login
-                userFormSubmit={this.userFormSubmit}/>
-              }/>
-            <Route path="/userdeatil" component={UserDetail}/>
-          </Switch>
-      </Fragment>
-    );
-  }
+        <Fragment>
+          <NavBar />
+            <Switch>
+              <Route exact path="/"
+                render={()=> <Home
+                  mapData={this.state.mapData}
+                  setMarkerLocation={this.setMarkerLocation}
+                  pullMarkerLocation={this.pullMarkerLocation}
+                  tempMarker={this.state.tempMarker}
+                  handleInputSubmit = {this.handleInputSubmit}
+                  handleFormChange={this.handleFormChange}
+                  handleCommentSubmit={this.handleCommentSubmit}
+                  formValues={this.state.formValues}
+                  display={this.state.display}
+                  selectedLocation={this.state.selectedLocation}/>
+                }/>
+              <Route path="/login"
+                render={()=> <Login
+                  userFormSubmit={this.userFormSubmit}/>
+                }/>
+              <Route path="/userdetail"
+                render={()=> <UserDetail
+                  currentUser={this.state.currentUser}
+                  handleCommentSubmit={this.handleCommentSubmit}
+                  handleFormChange={this.handleFormChange}
+                  formValues={this.state.formValues}
+                  mapData={this.state.mapData.filter((location)=>{
+                    return location.user_id === this.state.currentUser.id
+                  })}/>
+                }/>
+            </Switch>
+        </Fragment>
+      );
+    }
+
+
 }
 
 export default App;
+
+
+// <Route path="/login"
+//   render={()=> <Login
+//     userFormSubmit={this.userFormSubmit}/>
+//     this.state.currentUser.username === '' ? (
+//       <Redirect to="/login" />
+//     ) : (
+//       <Redirect to="/" />
+//     )
+//   }/>

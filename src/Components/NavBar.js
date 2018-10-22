@@ -9,9 +9,9 @@ const link = {
   width: '100px',
   padding: '12px',
   margin: '0 6px 6px',
-  background: 'blue',
+  border: 'black',
   textDecoration: 'none',
-  color: 'white',
+  color: 'white'
 }
 
 const Home = () => (
@@ -24,16 +24,18 @@ const Home = () => (
 const NavBar = () => {
   return(
     <div id="nav-bar">
-      <h1 id="snitch">Snitch</h1>
-              <NavLink to='/' exact style={link} activeStyle={{
-        background: 'darkblue'
-      }}>Home</NavLink>
-              <NavLink to='/login' exact style={link} activeStyle={{
-        background: 'darkblue'
-      }}>Login</NavLink>
-              <NavLink to='/userdeatil' exact style={link} activeStyle={{
-        background: 'darkblue'
-      }}>UserDetail</NavLink>
+    <h1 id="snitch" style={{textAlign:"left"}}>Snitch</h1>
+    <div style={{textAlign:"right"}}>
+            <NavLink to='/' exact style={link} activeStyle={{
+      background: 'black'
+    }}>Home</NavLink>
+            <NavLink to='/login' exact style={link} activeStyle={{
+      background: 'black'
+    }}>Login</NavLink>
+            <NavLink to='/userdetail' exact style={link} activeStyle={{
+      background: 'black'
+    }}>UserDetail</NavLink>
+    </div>
     </div>
 
   )
