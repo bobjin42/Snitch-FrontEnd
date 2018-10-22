@@ -20,7 +20,7 @@ export default class ControlPanel extends React.Component {
           :
           <SnitchForm
             handleInputSubmit={this.props.handleInputSubmit} handleFormChange={this.props.handleFormChange} formValues={this.props.formValues}
-            tempMarker={this.props.tempMarker} />
+            tempMarker={this.props.tempMarker.location} />
 
         }
         <br></br>

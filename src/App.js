@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import GoogleApiWrapper from './Components/MapContainer'
-import ControlPanel from './Components/ControlPanel'
 import NavBar from './Components/NavBar'
-import { Grid } from 'semantic-ui-react'
+import Login from './Components/Login'
+import UserDetail from './Components/UserDetail'
+import Home from './Components/Home'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 
 class App extends Component {
@@ -111,34 +112,50 @@ class App extends Component {
     return (
       <Fragment>
         <NavBar />
-        <Grid columns={2} padded>
-          <Grid.Column width={10}>
-            <GoogleApiWrapper
-              mapData={this.state.mapData}
-              setMarkerLocation={this.setMarkerLocation}
-              pullMarkerLocation={this.pullMarkerLocation}
-              tempMarker={this.state.tempMarker}
-            />
-            />
-          </Grid.Column>
-          <Grid.Column width={6}>
-            <ControlPanel
-              handleInputSubmit = {this.handleInputSubmit}
-              handleFormChange={this.handleFormChange}
-              formValues={this.state.formValues}
-              tempMarker={this.state.tempMarker.location}
-              display={this.state.display}
-              mapData={this.state.mapData}
-              selectedLocation={this.state.selectedLocation}
-            />
-          </Grid.Column>
-        </Grid>
-
-
+          <Switch>
+            <Route exact path="/"
+              render={()=> <Home
+                mapData={this.state.mapData}
+                setMarkerLocation={this.setMarkerLocation}
+                pullMarkerLocation={this.pullMarkerLocation}
+                tempMarker={this.state.tempMarker}
+                handleInputSubmit = {this.handleInputSubmit}
+                handleFormChange={this.handleFormChange}
+                formValues={this.state.formValues}
+                display={this.state.display}
+                selectedLocation={this.state.selectedLocation}/>
+              }/>
+            <Route path="/login" component={Login}/>
+            <Route path="/userdeatil" component={UserDetail}/>
+          </Switch>
       </Fragment>
-
     );
   }
 }
 
 export default App;
+
+// <Route exact path="/" component={Home}/>
+//
+// <Grid columns={2} padded>
+//   <Grid.Column width={10}>
+//     <GoogleApiWrapper
+//       mapData={this.state.mapData}
+//       setMarkerLocation={this.setMarkerLocation}
+//       pullMarkerLocation={this.pullMarkerLocation}
+//       tempMarker={this.state.tempMarker}
+//     />
+//     />
+//   </Grid.Column>
+//   <Grid.Column width={6}>
+//     <ControlPanel
+//       handleInputSubmit = {this.handleInputSubmit}
+//       handleFormChange={this.handleFormChange}
+//       formValues={this.state.formValues}
+//       tempMarker={this.state.tempMarker.location}
+//       display={this.state.display}
+//       mapData={this.state.mapData}
+//       selectedLocation={this.state.selectedLocation}
+//     />
+//   </Grid.Column>
+// </Grid>
