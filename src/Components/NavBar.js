@@ -20,10 +20,6 @@ const Home = () => (
   </div>
 )
 
-// const UserPage = () => (
-//
-// )
-
 
 const NavBar = () => {
   return(
@@ -45,14 +41,3 @@ const NavBar = () => {
 }
 
 export default NavBar
-
-// ReactDOM.render((
-//   <Router>
-//     <React.Fragment>
-//     <Navbar />
-//     <Route exact path="/" component={App} />
-//     <Route exact path="/login" component={Login} />
-//     </React.Fragment>
-//   </Router>),
-//   document.getElementById('root')
-// );

@@ -23,8 +23,8 @@ class App extends Component {
         description: '',
         location: {}
       },
-      display: false
-
+      display: false,
+      currentUser: {}
     }
   }
 
@@ -66,6 +66,30 @@ class App extends Component {
         [event.target.name]: event.target.value
       }
     })
+  }
+
+  userFormSubmit=(username, password, submitType)=>{
+    let endpoint;
+    submitType === "signup" ? endpoint = "users" : endpoint = "login"
+
+      fetch(`http://localhost:3001/api/v1/${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password
+        })
+      })
+      .then(r=> r.json())
+      .then((userData)=>{
+        this.setState({
+          currentUser: userData
+        })
+      })
+      .then(window.location.href = "localhost:3000/")
   }
 
   handleInputSubmit = (event) => {
@@ -125,7 +149,10 @@ class App extends Component {
                 display={this.state.display}
                 selectedLocation={this.state.selectedLocation}/>
               }/>
-            <Route path="/login" component={Login}/>
+            <Route path="/login"
+              render={()=> <Login
+                userFormSubmit={this.userFormSubmit}/>
+              }/>
             <Route path="/userdeatil" component={UserDetail}/>
           </Switch>
       </Fragment>
@@ -134,28 +161,3 @@ class App extends Component {
 }
 
 export default App;
-
-// <Route exact path="/" component={Home}/>
-//
-// <Grid columns={2} padded>
-//   <Grid.Column width={10}>
-//     <GoogleApiWrapper
-//       mapData={this.state.mapData}
-//       setMarkerLocation={this.setMarkerLocation}
-//       pullMarkerLocation={this.pullMarkerLocation}
-//       tempMarker={this.state.tempMarker}
-//     />
-//     />
-//   </Grid.Column>
-//   <Grid.Column width={6}>
-//     <ControlPanel
-//       handleInputSubmit = {this.handleInputSubmit}
-//       handleFormChange={this.handleFormChange}
-//       formValues={this.state.formValues}
-//       tempMarker={this.state.tempMarker.location}
-//       display={this.state.display}
-//       mapData={this.state.mapData}
-//       selectedLocation={this.state.selectedLocation}
-//     />
-//   </Grid.Column>
-// </Grid>
