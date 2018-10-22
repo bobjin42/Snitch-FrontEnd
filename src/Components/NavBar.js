@@ -14,9 +14,19 @@ const link = {
   color: 'white',
 }
 
-const NavBar = () => {
+const Home = () => (
+  <div>
+    <h2>Home</h2>
+  </div>
+)
 
-  return (
+// const UserPage = () => (
+//
+// )
+
+
+const NavBar = () => {
+  return(
     <div id="nav-bar">
       <h1 id="snitch">Snitch</h1>
               <NavLink to='/' exact style={link} activeStyle={{
@@ -29,7 +39,20 @@ const NavBar = () => {
         background: 'darkblue'
       }}>UserDetail</NavLink>
     </div>
+
   )
+
 }
 
 export default NavBar
+
+// ReactDOM.render((
+//   <Router>
+//     <React.Fragment>
+//     <Navbar />
+//     <Route exact path="/" component={App} />
+//     <Route exact path="/login" component={Login} />
+//     </React.Fragment>
+//   </Router>),
+//   document.getElementById('root')
+// );
