@@ -89,7 +89,7 @@ class App extends Component {
           currentUser: userData
         })
       })
-      .then(window.location.href = "localhost:3000/")
+      .then(window.location.href = "http://localhost:3000/")
   }
 
   handleInputSubmit = (event) => {
