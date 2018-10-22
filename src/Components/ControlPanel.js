@@ -10,7 +10,7 @@ export default class ControlPanel extends React.Component {
     const markerData = this.props.mapData.find((map) => {
       return map.id == this.props.selectedLocation
     })
-    console.log(markerData)
+    // console.log(markerData)
     return (
       <div>
         {this.props.display ?
@@ -19,8 +19,11 @@ export default class ControlPanel extends React.Component {
           />
           :
           <SnitchForm
-            handleInputSubmit={this.props.handleInputSubmit} handleFormChange={this.props.handleFormChange} formValues={this.props.formValues}
-            tempMarker={this.props.tempMarker} />
+            handleInputSubmit={this.props.handleInputSubmit}
+            handleFormChange={this.props.handleFormChange}
+            formValues={this.props.formValues}
+            tempMarker={this.props.tempMarker}
+          />
 
         }
         <br></br>

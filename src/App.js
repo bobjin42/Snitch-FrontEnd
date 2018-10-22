@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route, NavLink, Link } from 'react-router-dom'
 import GoogleApiWrapper from './Components/MapContainer'
 import ControlPanel from './Components/ControlPanel'
 import NavBar from './Components/NavBar'
+import Login from './Components/Login'
 import { Grid } from 'semantic-ui-react'
 
 
@@ -110,7 +112,13 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <NavBar />
+        <Router>
+        <div>
+          <NavBar />
+            <Route exact path="/" component={App} />
+            <Route exact path="/login" component={Login} />
+        </div>
+        </Router>
         <Grid columns={2} padded>
           <Grid.Column width={10}>
             <GoogleApiWrapper
