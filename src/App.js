@@ -6,9 +6,8 @@ import Login from './Components/Login'
 import UserDetail from './Components/UserDetail'
 import Home from './Components/Home'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
-import createHistory from 'history/createBrowserHistory'
 
-const history = createHistory();
+
 
 
 class App extends Component {
@@ -29,7 +28,8 @@ class App extends Component {
         comment: ''
       },
       display: false,
-      currentUser: {}
+      currentUser: {},
+      redirect: false
     }
   }
 
@@ -124,8 +124,9 @@ class App extends Component {
       .then(r=> r.json())
       .then((userData)=>{
         this.setState({
-          currentUser: userData
-        },() => <Redirect to="/" />)
+          currentUser: userData,
+          redirect: true
+        })
       })
       // .then(() => this.props.history.push("/"))
       // .then(window.location.href = "http://localhost:3000/")
@@ -176,6 +177,11 @@ class App extends Component {
     console.log(this.state.selectedLocationComments)
     return (
         <Fragment>
+        {this.state.redirect ?
+          <Redirect to="/" />
+          :
+          null
+        }
           <NavBar />
             <Switch>
               <Route exact path="/"
@@ -215,14 +221,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-// <Route path="/login"
-//   render={()=> <Login
-//     userFormSubmit={this.userFormSubmit}/>
-//     this.state.currentUser.username === '' ? (
-//       <Redirect to="/login" />
-//     ) : (
-//       <Redirect to="/" />
-//     )
-//   }/>
