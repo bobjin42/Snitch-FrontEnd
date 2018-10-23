@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import GoogleApiWrapper from './Components/MapContainer'
-import ControlPanel from './Components/ControlPanel'
 import NavBar from './Components/NavBar'
-import { Grid } from 'semantic-ui-react'
+import Login from './Components/Login'
+import UserDetail from './Components/UserDetail'
+import Home from './Components/Home'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
     this.state = {
       mapData:[],
       selectedLocation: '',
+      selectedLocationComments:[],
       tempMarker: {
         location: {},
         set: false
@@ -20,9 +22,11 @@ class App extends Component {
       formValues: {
         title: '',
         description: '',
-        location: {}
-      }
-
+        location: {},
+        comment: ''
+      },
+      display: false,
+      currentUser: {}
     }
   }
 
@@ -36,17 +40,31 @@ class App extends Component {
     })
   }
 
-  pullMarkerLocation = (event) => {
+  pullMarkerLocation = (id) => {
     this.setState({
-      selectedLocation: event.name
-    },() => console.log(this.state.selectedLocation))
+      selectedLocation: id,
+      display: true
+    },()=>{
+      this.state.mapData.find((marker)=>{
+        return marker.id === this.state.selectedLocation
+      })
+    })
+    fetch(`http://localhost:3001/api/v1/locations/${id}`)
+    .then(response=>response.json())
+    .then((data)=>{
+      this.setState({
+        selectedLocationComments: data.location_data
+      })
+    })
   }
+
   setMarkerLocation = (obj) => {
     this.setState({
       tempMarker: {
         location: obj,
         set: true
-      }
+      },
+      display: false
     })
   }
 
@@ -59,6 +77,58 @@ class App extends Component {
     })
   }
 
+  handleCommentSubmit = (event) => {
+    event.preventDefault();
+    fetch('http://localhost:3001/api/v1/comments', {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          user_id: this.state.currentUser.id,
+          location_id: this.state.selectedLocation,
+          commentDescription: this.state.formValues.comment
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      this.setState({
+        formValues: {
+          title: '',
+          description: '',
+          location: {},
+          comment: ""
+        }
+      })
+    })
+  }
+
+  userFormSubmit=(username, password, submitType)=>{
+    debugger;
+    let endpoint;
+    submitType === "signup" ? endpoint = "users" : endpoint = "login"
+      fetch(`http://localhost:3001/api/v1/${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password
+        })
+      })
+      .then(r=> r.json())
+      .then((userData)=>{
+        this.setState({
+          currentUser: userData
+        })
+      })
+      // .then(() => this.props.history.push("/"))
+      // .then(window.location.href = "http://localhost:3000/")
+  }
+
   handleInputSubmit = (event) => {
     event.preventDefault();
     fetch('http://localhost:3001/api/v1/locations', {
@@ -69,7 +139,7 @@ class App extends Component {
       },
       body: JSON.stringify({
         location: {
-          user_id: 1,
+          user_id: this.state.currentUser.id,
           latitude: this.state.tempMarker.location.lat,
           longitude: this.state.tempMarker.location.lng,
           title: this.state.formValues.title,
@@ -92,42 +162,65 @@ class App extends Component {
         formValues: {
           title: '',
           description: '',
-          location: {}
+          location: {},
+          comment: ""
         }
-      },() => console.log(this.state))
+      })
     })
   }
 
 
   render() {
+    console.log(this.state.selectedLocationComments)
     return (
-      <Fragment>
-        <NavBar />
-        <Grid columns={2} padded>
-          <Grid.Column width={10}>
-            <GoogleApiWrapper
-              mapData={this.state.mapData}
-              setMarkerLocation={this.setMarkerLocation}
-              pullMarkerLocation={this.pullMarkerLocation}
-              tempMarker={this.state.tempMarker}
-            />
-            />
-          </Grid.Column>
-          <Grid.Column width={6}>
-            <ControlPanel
-              handleInputSubmit = {this.handleInputSubmit}
-              handleFormChange={this.handleFormChange}
-              formValues={this.state.formValues}
-              tempMarker={this.state.tempMarker.location}
-            />
-          </Grid.Column>
-        </Grid>
+        <Fragment>
+          <NavBar />
+            <Switch>
+              <Route exact path="/"
+                render={()=> <Home
+                  mapData={this.state.mapData}
+                  setMarkerLocation={this.setMarkerLocation}
+                  pullMarkerLocation={this.pullMarkerLocation}
+                  tempMarker={this.state.tempMarker}
+                  handleInputSubmit = {this.handleInputSubmit}
+                  handleFormChange={this.handleFormChange}
+                  handleCommentSubmit={this.handleCommentSubmit}
+                  formValues={this.state.formValues}
+                  display={this.state.display}
+                  comments={this.state.selectedLocationComments}
+                  selectedLocation={this.state.selectedLocation}/>
+                }/>
+              <Route path="/login"
+                render={()=> <Login
+                  userFormSubmit={this.userFormSubmit}/>
+                }/>
+              <Route path="/userdetail"
+                render={()=> <UserDetail
+                  currentUser={this.state.currentUser}
+                  handleCommentSubmit={this.handleCommentSubmit}
+                  handleFormChange={this.handleFormChange}
+                  formValues={this.state.formValues}
+                  mapData={this.state.mapData.filter((location)=>{
+                    return location.user_id === this.state.currentUser.id
+                  })}/>
+                }/>
+            </Switch>
+        </Fragment>
+      );
+    }
 
 
-      </Fragment>
-
-    );
-  }
 }
 
 export default App;
+
+
+// <Route path="/login"
+//   render={()=> <Login
+//     userFormSubmit={this.userFormSubmit}/>
+//     this.state.currentUser.username === '' ? (
+//       <Redirect to="/login" />
+//     ) : (
+//       <Redirect to="/" />
+//     )
+//   }/>

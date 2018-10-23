@@ -7,11 +7,26 @@ export default class ControlPanel extends React.Component {
     super(props)
   }
   render() {
-    // const style = {width: "40%", height: "100%", background: "#D3D3D3", display: "inline-block"}
+    const markerData = this.props.mapData.find((map) => {
+      return map.id == this.props.selectedLocation
+    })
+    // console.log(markerData)
     return (
       <div>
-        <SnitchForm handleInputSubmit={this.props.handleInputSubmit} handleFormChange={this.props.handleFormChange} formValues={this.props.formValues} tempMarker={this.props.tempMarker} /> 
-        <Details />
+        {this.props.display ?
+          <Details
+            handleCommentSubmit = {this.props.handleCommentSubmit}
+            markerData={markerData}
+            handleFormChange={this.props.handleFormChange}
+            formValues={this.props.formValues}
+            comments={this.props.comments}
+          />
+          :
+          <SnitchForm
+            handleInputSubmit={this.props.handleInputSubmit} handleFormChange={this.props.handleFormChange} formValues={this.props.formValues}
+            tempMarker={this.props.tempMarker.location} />
+
+        }
         <br></br>
         <br></br>
         <br></br>

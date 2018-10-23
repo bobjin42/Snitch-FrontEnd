@@ -8,13 +8,17 @@ import {Router, Route} from 'react-router';
 export class MapContainer extends React.Component {
 
   handleMarkerClick = (event) => {
-    this.props.pullMarkerLocation(event)
+    console.log(event)
+    if (event.name !== "temporaryMarker") {
+      this.props.pullMarkerLocation(event.id)
+    }
   }
+
   handleMapClick = (x,y,z) => {
     const locationObj = {lat: z.latLng.lat(), lng: z.latLng.lng()}
     this.props.setMarkerLocation(locationObj)
-
   }
+
   render() {
     const marker = this.props.mapData.map((point) => {
 
@@ -32,7 +36,7 @@ export class MapContainer extends React.Component {
         >
 
           {marker}
-          {this.props.tempMarker.set ? <Marker name={"test"} position={this.props.tempMarker.location} onClick={this.handleMarkerClick} /> : null }
+          {this.props.tempMarker.set ? <Marker name={"temporaryMarker"} position={this.props.tempMarker.location} onClick={this.handleMarkerClick} /> : null }
         </Map>
 
 

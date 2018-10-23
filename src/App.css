@@ -50,6 +50,12 @@ h1 {
   width: 60%;
 }
 
+#snitch {
+  font-family: 'Bangers', cursive;
+  letter-spacing: 3px;
+  padding-left: 2%;
+}
+
 .string-input {
   width: 75%;
   padding-left: 15%;
