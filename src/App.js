@@ -108,7 +108,6 @@ class App extends Component {
   }
 
   userFormSubmit=(username, password, submitType)=>{
-    debugger;
     let endpoint;
     submitType === "signup" ? endpoint = "users" : endpoint = "login"
       fetch(`http://localhost:3001/api/v1/${endpoint}`, {
@@ -126,7 +125,7 @@ class App extends Component {
       .then((userData)=>{
         this.setState({
           currentUser: userData
-        },() => history.push("/"))
+        },() => <Redirect to="/" />)
       })
       // .then(() => this.props.history.push("/"))
       // .then(window.location.href = "http://localhost:3000/")
