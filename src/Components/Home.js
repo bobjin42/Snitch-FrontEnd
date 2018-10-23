@@ -7,7 +7,7 @@ import ControlPanel from './ControlPanel'
 const Home = (props) => {
     return (
       <Grid columns={2} padded>
-        <Grid.Column width={10}>
+        <Grid.Column width={10} style={{minHeight:"80vh"}}>
           <GoogleApiWrapper
             mapData={props.mapData}
             setMarkerLocation={props.setMarkerLocation}
