@@ -89,7 +89,7 @@ class App extends Component {
           location: {},
           set: false
         },
-        formValue: {
+        formValues: {
           title: '',
           description: '',
           location: {}
