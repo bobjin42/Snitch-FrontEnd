@@ -6,6 +6,9 @@ import Login from './Components/Login'
 import UserDetail from './Components/UserDetail'
 import Home from './Components/Home'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import createHistory from 'history/createBrowserHistory'
+
+const history = createHistory();
 
 
 class App extends Component {
@@ -123,7 +126,7 @@ class App extends Component {
       .then((userData)=>{
         this.setState({
           currentUser: userData
-        })
+        },() => history.push("/"))
       })
       // .then(() => this.props.history.push("/"))
       // .then(window.location.href = "http://localhost:3000/")
