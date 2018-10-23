@@ -14,6 +14,7 @@ class App extends Component {
     this.state = {
       mapData:[],
       selectedLocation: '',
+      selectedLocationComments:[],
       tempMarker: {
         location: {},
         set: false
@@ -46,6 +47,13 @@ class App extends Component {
     },()=>{
       this.state.mapData.find((marker)=>{
         return marker.id === this.state.selectedLocation
+      })
+    })
+    fetch(`http://localhost:3001/api/v1/locations/${id}`)
+    .then(response=>response.json())
+    .then((data)=>{
+      this.setState({
+        selectedLocationComments: data.location_data
       })
     })
   }
@@ -116,6 +124,7 @@ class App extends Component {
           currentUser: userData
         })
       })
+      // .then(() => this.props.history.push("/"))
       // .then(window.location.href = "http://localhost:3000/")
   }
 
@@ -161,6 +170,7 @@ class App extends Component {
 
 
   render() {
+    console.log(this.state.selectedLocationComments)
     return (
         <Fragment>
           <NavBar />
@@ -176,6 +186,7 @@ class App extends Component {
                   handleCommentSubmit={this.handleCommentSubmit}
                   formValues={this.state.formValues}
                   display={this.state.display}
+                  comments={this.state.selectedLocationComments}
                   selectedLocation={this.state.selectedLocation}/>
                 }/>
               <Route path="/login"

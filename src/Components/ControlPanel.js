@@ -19,6 +19,7 @@ export default class ControlPanel extends React.Component {
             markerData={markerData}
             handleFormChange={this.props.handleFormChange}
             formValues={this.props.formValues}
+            comments={this.props.comments}
           />
           :
           <SnitchForm
