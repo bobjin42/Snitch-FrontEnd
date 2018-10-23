@@ -34,7 +34,7 @@ const NavBar = () => {
     }}>Login</NavLink>
             <NavLink to='/userdetail' exact style={link} activeStyle={{
       background: 'black'
-    }}>UserDetail</NavLink>
+    }}>User</NavLink>
     </div>
     </div>
 
