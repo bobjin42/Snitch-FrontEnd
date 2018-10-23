@@ -94,13 +94,18 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(data => {
+      console.log(data)
       this.setState({
         formValues: {
           title: '',
           description: '',
           location: {},
           comment: ""
-        }
+        },
+        selectedLocationComments: [
+          ...this.state.selectedLocationComments,
+          {comment: data, username: this.state.currentUser.username}
+        ]
       })
     })
   }
@@ -121,10 +126,15 @@ class App extends Component {
       })
       .then(r=> r.json())
       .then((userData)=>{
-        this.setState({
-          currentUser: userData,
-          redirect: true
-        })
+        if (userData.valid) {
+          this.setState({
+            currentUser: userData,
+            redirect: true
+          })
+        } else {
+          alert("Incorrect login credentials. Try again.")
+        }
+
       })
       .then((data)=>{
         this.setState({
@@ -170,7 +180,9 @@ class App extends Component {
           description: '',
           location: {},
           comment: ""
-        }
+        },
+      
+
       })
     })
   }
