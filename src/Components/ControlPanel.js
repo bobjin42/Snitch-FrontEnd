@@ -20,6 +20,7 @@ export default class ControlPanel extends React.Component {
             handleFormChange={this.props.handleFormChange}
             formValues={this.props.formValues}
             comments={this.props.comments}
+            currentUser={this.props.currentUser}
           />
           :
           <SnitchForm

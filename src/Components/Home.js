@@ -27,6 +27,7 @@ const Home = (props) => {
             mapData={props.mapData}
             selectedLocation={props.selectedLocation}
             comments={props.comments}
+            currentUser={props.currentUser}
           />
         </Grid.Column>
       </Grid>

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import CommentForm from './CommentForm'
-import { Card, Feed } from 'semantic-ui-react'
+import CommentCard from './CommentCard'
+import { Card } from 'semantic-ui-react'
 
 class Details extends Component {
   state={
@@ -16,27 +17,19 @@ class Details extends Component {
   render(){
     const commentList = this.props.markerData
     return (
-      <Fragment>
-      <Card onClick={this.handleCardClick}>
-      <Card.Header>{this.props.markerData.title}</Card.Header>
-      <Card.Description>{this.props.markerData.description}</Card.Description>
-      <Card.Meta>{this.props.markerData.updated_at.replace(/[a-zA-Z]+/g, " ")}</Card.Meta>
-      </Card>
+      <div style={{paddingLeft:"20px"}}>
+      <Card
+      onClick={this.handleCardClick}
+      header={this.props.markerData.title}
+      description={this.props.markerData.description}
+      meta={this.props.markerData.updated_at.replace(/[a-zA-Z]+/g, " ")}
+      />
 
       Comments:
-      <Card>
-      <Feed>
       {this.props.comments.map((comment)=>{
-        return (
-          <Feed.Content key={comment.id}>
-          <Feed.Label><strong>{comment.username}</strong></Feed.Label>
-          <Feed.Summary>"{comment.comment.commentDescription}"</Feed.Summary>
-          </Feed.Content>
-
-        )
+        return <CommentCard key={comment.id} comment={comment}/>
       })}
-      </Feed>
-      </Card>
+
 
       {this.state.isClicked ?
 
@@ -49,7 +42,7 @@ class Details extends Component {
       :
       null
     }
-      </Fragment>
+      </div>
     )
   }
 }

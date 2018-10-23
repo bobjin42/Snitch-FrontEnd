@@ -8,8 +8,6 @@ import Home from './Components/Home'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 
-
-
 class App extends Component {
   constructor(props) {
     super(props)
@@ -128,6 +126,11 @@ class App extends Component {
           redirect: true
         })
       })
+      .then((data)=>{
+        this.setState({
+          redirect: false
+        })
+      })
       // .then(() => this.props.history.push("/"))
       // .then(window.location.href = "http://localhost:3000/")
   }
@@ -174,9 +177,14 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state.selectedLocationComments)
+    console.log(this.state.currentUser)
     return (
         <Fragment>
+        {this.state.currentUser.username === undefined ?
+          <Redirect to="/login" />
+        :
+        null
+        }
         {this.state.redirect ?
           <Redirect to="/" />
           :
@@ -196,6 +204,7 @@ class App extends Component {
                   formValues={this.state.formValues}
                   display={this.state.display}
                   comments={this.state.selectedLocationComments}
+                  currentUser={this.state.currentUser}
                   selectedLocation={this.state.selectedLocation}/>
                 }/>
               <Route path="/login"
