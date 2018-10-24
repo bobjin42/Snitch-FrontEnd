@@ -165,6 +165,7 @@ class App extends Component {
     })
     .then(r => r.json())
     .then(response => {
+      console.log("first",response)
       this.setState({
         mapData: [
           ...this.state.mapData,
@@ -183,7 +184,7 @@ class App extends Component {
         },
 
 
-      })
+      },() => this.pullMarkerLocation(this.state.mapData.slice(-1)[0].id))
     })
   }
 
