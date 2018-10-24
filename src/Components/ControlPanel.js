@@ -21,6 +21,7 @@ export default class ControlPanel extends React.Component {
             formValues={this.props.formValues}
             comments={this.props.comments}
             currentUser={this.props.currentUser}
+            deleteComment={this.props.deleteComment}
           />
           :
           <SnitchForm

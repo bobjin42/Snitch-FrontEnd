@@ -28,6 +28,7 @@ const Home = (props) => {
             selectedLocation={props.selectedLocation}
             comments={props.comments}
             currentUser={props.currentUser}
+            deleteComment={props.deleteComment}
           />
         </Grid.Column>
       </Grid>

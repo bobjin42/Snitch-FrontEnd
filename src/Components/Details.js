@@ -18,16 +18,16 @@ class Details extends Component {
     const commentList = this.props.markerData
     return (
       <div style={{paddingLeft:"20px"}}>
-      <Card
-      onClick={this.handleCardClick}
-      header={this.props.markerData.title}
-      description={this.props.markerData.description}
-      meta={this.props.markerData.updated_at.replace(/[a-zA-Z]+/g, " ")}
-      />
+        <Card
+          onClick={this.handleCardClick}
+          header={this.props.markerData.title}
+          description={this.props.markerData.description}
+          meta={this.props.markerData.updated_at.replace(/[a-zA-Z]+/g, " ")}
+        />
 
-      Comments:
-      {this.props.comments.map((comment)=>{
-        return <CommentCard key={comment.id} comment={comment}/>
+        Comments:
+        {this.props.comments.map((comment)=>{
+          return <CommentCard key={comment.id} deleteComment={this.props.deleteComment} comment={comment}/>
       })}
 
 

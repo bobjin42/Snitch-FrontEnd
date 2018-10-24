@@ -40,7 +40,7 @@ const NavBar = (props) => {
 
         <NavLink to='/userdetail' exact style={link} activeStyle={{
           background: 'black'
-        }}>User</NavLink>
+        }}>{props.currentUser.username ? props.currentUser.username : "User"}</NavLink>
 
         {props.currentUser.username === undefined ?
           <NavLink to='/login' exact style={link} activeStyle={{

@@ -187,37 +187,49 @@ class App extends Component {
     })
   }
 
+  deleteComment = (event) => {
+    const commentId = event.target.id
+    const updatedLocationComments = this.state.selectedLocationComments.filter((comment) => {
+      return comment.comment.id != commentId
+    })
+    this.setState({
+      selectedLocationComments: updatedLocationComments
+    })
+    fetch(`http://localhost:3001/api/v1/comments/${commentId}`, {method: 'DELETE'})
+  }
+
 
   render() {
-    console.log(this.state.currentUser)
+
     return (
         <Fragment>
-        {this.state.currentUser.username === undefined ?
-          <Redirect to="/login" />
-        :
-        null
-        }
-        {this.state.redirect ?
-          <Redirect to="/" />
+          {this.state.currentUser.username === undefined ?
+            <Redirect to="/login" />
           :
-          null
-        }
+            null
+          }
+          {this.state.redirect ?
+            <Redirect to="/" />
+          :
+            null
+          }
           <NavBar currentUser={this.state.currentUser} />
-            <Switch>
-              <Route exact path="/"
-                render={()=> <Home
-                  mapData={this.state.mapData}
-                  setMarkerLocation={this.setMarkerLocation}
-                  pullMarkerLocation={this.pullMarkerLocation}
-                  tempMarker={this.state.tempMarker}
-                  handleInputSubmit = {this.handleInputSubmit}
-                  handleFormChange={this.handleFormChange}
-                  handleCommentSubmit={this.handleCommentSubmit}
-                  formValues={this.state.formValues}
-                  display={this.state.display}
-                  comments={this.state.selectedLocationComments}
-                  currentUser={this.state.currentUser}
-                  selectedLocation={this.state.selectedLocation}/>
+          <Switch>
+            <Route exact path="/"
+              render={()=> <Home
+                mapData={this.state.mapData}
+                setMarkerLocation={this.setMarkerLocation}
+                pullMarkerLocation={this.pullMarkerLocation}
+                tempMarker={this.state.tempMarker}
+                handleInputSubmit = {this.handleInputSubmit}
+                handleFormChange={this.handleFormChange}
+                handleCommentSubmit={this.handleCommentSubmit}
+                formValues={this.state.formValues}
+                display={this.state.display}
+                comments={this.state.selectedLocationComments}
+                currentUser={this.state.currentUser}
+                selectedLocation={this.state.selectedLocation}
+                deleteComment={this.deleteComment}/>
                 }/>
               <Route path="/login"
                 render={()=> <Login
