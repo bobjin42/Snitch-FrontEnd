@@ -44,6 +44,7 @@ background: linear-gradient(to right, #859398, #283048); /* W3C, IE 10+/ Edge, F
 h1 {
   font-family: 'Roboto', sans-serif;
   padding-left: 15px;
+
 }
 
 #snitch-form {

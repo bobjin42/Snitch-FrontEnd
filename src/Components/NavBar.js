@@ -30,26 +30,26 @@ const button = {
 
 const NavBar = (props) => {
   return(
-    <div id="nav-bar">
-    <h1 id="snitch" style={{textAlign:"left"}}>Snitch</h1>
-    <div style={{textAlign:"right"}}>
-      <NavLink to='/' exact style={link} activeStyle={{
-      background: 'black'
-      }}>Home</NavLink>
-
-
-      <NavLink to='/userdetail' exact style={link} activeStyle={{
-      background: 'black'
-      }}>User</NavLink>
-
-      {props.currentUser.username === undefined ?
-        <NavLink to='/login' exact style={link} activeStyle={{
+    <div id="nav-bar" style={{position: "relative"}}>
+      <h1 id="snitch" style={{textAlign:"left", position: "absolute", top: "5px", left: "10px",fontSize: "2.2em"}}>Snitch</h1>
+      <div style={{textAlign:"right"}}>
+        <NavLink to='/' exact style={link} activeStyle={{
           background: 'black'
-        }}>Login</NavLink>
+        }}>Home</NavLink>
+
+
+        <NavLink to='/userdetail' exact style={link} activeStyle={{
+          background: 'black'
+        }}>User</NavLink>
+
+        {props.currentUser.username === undefined ?
+          <NavLink to='/login' exact style={link} activeStyle={{
+            background: 'black'
+          }}>Login</NavLink>
         :
         <Button className="ui inverted black basic button" onClick={()=>{window.location.reload()}}>Logout</Button>
-      }
-    </div>
+        }
+      </div>
     </div>
 
   )
