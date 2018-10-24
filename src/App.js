@@ -181,7 +181,7 @@ class App extends Component {
           location: {},
           comment: ""
         },
-      
+
 
       })
     })
@@ -202,7 +202,7 @@ class App extends Component {
           :
           null
         }
-          <NavBar />
+          <NavBar currentUser={this.state.currentUser} />
             <Switch>
               <Route exact path="/"
                 render={()=> <Home
